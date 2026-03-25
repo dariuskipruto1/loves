@@ -1,316 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sharing Love</title>
-  <style>
-    /* Animated background gradient */
-    body {
-      font-family: 'Georgia', serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
-      background-size: 400% 400%;
-      animation: gradientShift 20s ease infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharing Love 💖</title>
 
-    /* Full-page glowing border */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      border: 8px solid #ff6b9d;
-      border-radius: 20px;
-      pointer-events: none;
-      animation: glowBorder 6s infinite alternate ease-in-out;
-    }
-    @keyframes glowBorder {
-      0% { box-shadow: 0 0 10px rgba(255,107,157,0.5); border-color: #ff6b9d; }
-      50% { box-shadow: 0 0 20px rgba(248,181,0,0.6); border-color: #f8b500; }
-      100% { box-shadow: 0 0 15px rgba(196,69,105,0.6); border-color: #c44569; }
-    }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    .title {
-      color: #fff;
-      font-size: 8vw;
-      margin: 5vh 0 2vh;
-      text-align: center;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); color: #ff6b9d; }
-      50% { transform: scale(1.05); color: #f8b500; }
-    }
+<style>
+body {
+  font-family: Georgia, serif;
+  margin: 0;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg,#ff6b9d,#c44569,#f8b500);
+  background-size: 400% 400%;
+  animation: bg 20s infinite;
+}
 
-    .message {
-      background: rgba(255,255,255,0.9);
-      padding: 5vw;
-      border-radius: 20px;
-      max-width: 90%;
-      text-align: center;
-      font-size: 5vw;
-      line-height: 1.6;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
+@keyframes bg {
+  50% { background-position: 100% 50%; }
+}
 
-    .input-area {
-      margin-top: 4vh;
-      text-align: center;
-    }
-    .input-area input {
-      padding: 2vh;
-      border-radius: 20px;
-      border: 2px solid #c44569;
-      font-size: 4vw;
-      width: 80%;
-      text-align: center;
-      outline: none;
-    }
+/* 💖 EMOJI BORDER FRAME */
+.border {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+  z-index: 10;
+}
+.top, .bottom { width:100%; white-space:nowrap; }
+.top { top:0; }
+.bottom { bottom:0; }
 
-    .btn {
-      margin: 2vh;
-      background: linear-gradient(45deg, #ff6b9d, #c44569);
-      color: white;
-      border: none;
-      padding: 2vh 5vw;
-      font-size: 4vw;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.left, .right {
+  height:100%;
+  writing-mode: vertical-rl;
+}
+.left { left:0; }
+.right { right:0; }
 
-    .hidden-message {
-      display: none;
-      margin-top: 4vh;
-      font-size: 5vw;
-      font-weight: bold;
-      color: #c44569;
-      text-align: center;
-    }
+.track { animation: scrollX 18s linear infinite; }
+.vertical .track { animation: scrollY 18s linear infinite; }
 
-    .love-frame {
-      border: 4px solid #ff6b9d;
-      border-radius: 20px;
-      padding: 5vw;
-      margin-top: 5vh;
-      background: rgba(255,255,255,0.95);
-      max-width: 90%;
-      text-align: center;
-      animation: glowBorder 6s infinite alternate ease-in-out;
-    }
+@keyframes scrollX {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+@keyframes scrollY {
+  from { transform: translateY(100%); }
+  to { transform: translateY(-100%); }
+}
 
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 3vh;
-    }
-    .social-icons .icon {
-      margin: 1vh;
-      text-decoration: none;
-      padding: 2vh 4vw;
-      border-radius: 25px;
-      color: white;
-      font-weight: bold;
-      font-size: 4vw;
-      animation: iconPulse 3s infinite ease-in-out;
-    }
-    @keyframes iconPulse {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-    .icon.whatsapp { background: #25D366; }
-    .icon.twitter { background: #1DA1F2; }
-    .icon.facebook { background: #4267B2; }
-    .icon.email { background: #c44569; }
-    .icon.copy { background: #f8b500; }
+/* TITLE */
+h1 {
+  color: white;
+  font-size: clamp(30px,7vw,60px);
+  margin-top: 40px;
+  animation: pulse 2s infinite;
+}
 
-    /* Sparkle effect */
-    .sparkle {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 3s infinite ease-in-out;
-      pointer-events: none;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.3); }
-    }
+@keyframes pulse {
+  50% { transform: scale(1.05); color: #f8b500; }
+}
 
-    /* Emoji rows around the page */
-    .emoji-row {
-      position: fixed;
-      width: 100%;
-      font-size: 2em;
-      white-space: nowrap;
-      overflow: hidden;
-      pointer-events: none;
-      opacity: 0.8;
-    }
-    .emoji-row.top { top: 0; left: 0; }
-    .emoji-row.bottom { bottom: 0; left: 0; }
-    .emoji-row.left { top: 50%; left: 0; transform: rotate(-90deg) translateY(-50%); }
-    .emoji-row.right { top: 50%; right: 0; transform: rotate(90deg) translateY(-50%); }
+/* MESSAGE */
+.message {
+  background: rgba(255,255,255,0.9);
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 90%;
+  font-size: clamp(16px,4vw,22px);
+}
 
-    .emoji-track {
-      display: inline-block;
-      animation: scrollEmojis 20s linear infinite;
-    }
-    @keyframes scrollEmojis {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
-    }
+/* GENERATOR */
+.box {
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 90%;
+}
 
-    footer {
-      margin-top: 5vh;
-      font-size: 3vw;
-      color: white;
-      opacity: 0.8;
-      text-align: center;
-    }
-  </style>
+input, select {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 15px;
+  border: 2px solid #c44569;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  background: #c44569;
+  color: white;
+  cursor: pointer;
+}
+
+#output {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #c44569;
+}
+
+.icons {
+  display:none;
+  margin-top:15px;
+}
+
+.icon {
+  padding:8px;
+  margin:5px;
+  border-radius:15px;
+  color:white;
+  text-decoration:none;
+}
+.whatsapp{background:#25D366;}
+.twitter{background:#1DA1F2;}
+.facebook{background:#4267B2;}
+.email{background:#c44569;}
+.copy{background:#f8b500;}
+
+/* ✨ SPARKLES */
+.sparkle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+  50% { transform: scale(1.5); opacity: 1; }
+}
+</style>
 </head>
+
 <body>
-  <audio id="bgMusic" autoplay loop>
-    <source src="love-music.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="chimeSound">
-    <source src="chime.mp3" type="audio/mpeg">
-  </audio>
 
-  <h1 class="title">Sharing Love</h1>
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="love-music.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="message">
-    <p>Dear Clare,💖</p>
-    <p>Love is the light that warms the soul, the strength that lifts us, and the joy that makes life beautiful.</p>
-    <p>It has no occasion, no boundaries, no limits — it simply flows, endlessly.</p>
-    <p>May this love surround you, uplift you, and remind you that you are cherished, always.</p>
-    <p>With love,<br>Darius</p>
-  </div>
+<audio id="chimeSound">
+  <source src="chime.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="input-area">
-    <input type="text" id="nameInput" placeholder="Enter a name here..." oninput="livePreview()">
-    <button class="btn" onclick="resetMessage()">Reset</button>
-  </div>
+<!-- 💖 EMOJI FRAME -->
+<div class="border top"><div class="track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
+<div class="border bottom"><div class="track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
+<div class="border left vertical"><div class="track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
+<div class="border right vertical"><div class="track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
 
-  <div class="hidden-message" id="hiddenMessage"></div>
+<h1>Sharing Love 💖</h1>
 
-  <div class="love-frame">
-    <h2>💖 Share the Love 💖</h2>
-    <p class="frame-message">Spread joy and positivity with your friends!</p>
-    <div class="social-icons" id="shareButtons" style="display:none;">
-      <a id="whatsappBtn" class="icon whatsapp" target="_blank">WhatsApp</a>
-      <a id="twitterBtn" class="icon twitter" target="_blank">Twitter/X</a>
-      <a id="facebookBtn" class="icon facebook" target="_blank">Facebook</a>
-      <a id="emailBtn" class="icon email" target="_blank">Email</a>
-      <a href="#" class="icon copy" onclick="copyMessage()">Copy</a>
-    </div>
-  </div>
+<!-- 💌 ORIGINAL MESSAGE -->
+<div class="message">
+  <p><strong>Dear Clare 💖</strong></p>
+  <p>
+    Love is the light that warms the soul, the strength that lifts us, 
+    and the joy that makes life beautiful.
+  </p>
+  <p>
+    It has no occasion, no boundaries, no limits — it simply flows endlessly.
+  </p>
+  <p>
+    May this love surround you, uplift you, and remind you that you are cherished, always.
+  </p>
+  <p><strong>With love,<br>Darius</strong></p>
+</div>
 
-    <button class="btn" id="celebrationToggle" onclick="toggleCelebration()">✨ Celebration Mode ON ✨</button>
+<!-- 🤖 GENERATOR -->
+<div class="box">
 
-  <footer>
-    Made with ❤️ to share love universally
-  </footer>
+<input id="name" placeholder="Who deserves this love today? 💖">
 
-  <!-- Emoji rows around the page -->
-  <div class="emoji-row top"><div class="emoji-track">💖 💕 💓 c💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
-  <div class="emoji-row bottom"><div class="emoji-track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
-  <div class="emoji-row left"><div class="emoji-track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
-  <div class="emoji-row right"><div class="emoji-track">💖 💕 💓 💗 💞 💘 💝 💟 💖 💕 💓 💗 💞 💘 💝 💟</div></div>
+<select id="style">
+  <option value="romantic">💖 Romantic</option>
+  <option value="poetic">🌹 Poetic</option>
+  <option value="cute">😊 Cute</option>
+  <option value="deep">✨ Deep</option>
+</select>
 
-  <script>
-    let celebrationEnabled = true;
+<br>
 
-    function toggleCelebration() {
-      celebrationEnabled = !celebrationEnabled;
-      const btn = document.getElementById("celebrationToggle");
-      btn.textContent = celebrationEnabled ? "✨ Celebration Mode ON ✨" : "✨ Celebration Mode OFF ✨";
-    }
+<button onclick="generate()">Generate Love 💌</button>
+<button onclick="generate()">Try Another 💫</button>
 
-    function livePreview() {
-      const name = document.getElementById("nameInput").value.trim();
-      const messageBox = document.getElementById("hiddenMessage");
-      let message;
+<div id="output"></div>
 
-      if (name) {
-        message = `Love flows endlessly to you, ${name}. May your days be brighter, your heart fuller, and your soul lighter.`;
-      } else {
-        message = "Love makes the world brighter, hearts fuller, and days happier. Thank you for being part of this love.";
-      }
+<div class="icons" id="share">
+  <a id="wa" class="icon whatsapp">WhatsApp</a>
+  <a id="tw" class="icon twitter">Twitter</a>
+  <a id="fb" class="icon facebook">Facebook</a>
+  <a id="em" class="icon email">Email</a>
+  <a class="icon copy" onclick="copyMsg()">Copy</a>
+</div>
 
-      messageBox.textContent = message;
-      messageBox.style.display = "block";
-      document.getElementById("shareButtons").style.display = "flex";
+</div>
 
-      const encodedMessage = encodeURIComponent(message);
-      document.getElementById("whatsappBtn").href = `https://wa.me/?text=${encodedMessage}`;
-      document.getElementById("twitterBtn").href = `https://twitter.com/intent/tweet?text=${encodedMessage}`;
-      document.getElementById("facebookBtn").href = `https://www.facebook.com/sharer/sharer.php?quote=${encodedMessage}`;
-      document.getElementById("emailBtn").href = `mailto:?subject=Sharing Love&body=${encodedMessage}`;
+<script>
+// 🔊 AUDIO FIX (user interaction required)
+document.body.addEventListener('click', () => {
+  document.getElementById('bgMusic').play();
+}, { once: true });
 
-      if (celebrationEnabled) {
-        const chime = document.getElementById("chimeSound");
-        chime.currentTime = 0;
-        chime.play().catch(() => {});
-      }
-    }
+// ENTER KEY
+document.getElementById("name").addEventListener("keypress", e=>{
+  if(e.key==="Enter") generate();
+});
 
-    function resetMessage() {
-      document.getElementById("nameInput").value = "";
-      const messageBox = document.getElementById("hiddenMessage");
-      messageBox.style.display = "none";
-      document.getElementById("shareButtons").style.display = "none";
-    }
+function generate() {
+  const name = document.getElementById("name").value || "someone special";
+  const style = document.getElementById("style").value;
 
-    function copyMessage() {
-      const message = document.getElementById("hiddenMessage").textContent;
-      if (message) {
-        navigator.clipboard.writeText(message).then(() => {
-          alert("Message copied! You can paste it into any social media app.");
-        });
-      }
-    }
+  const data = {
+    romantic:[
+      "My heart belongs to you, {n} 💖",
+      "Every moment feels magical with you, {n}",
+      "{n}, you are my forever and always"
+    ],
+    poetic:[
+      "{n}, you are the poetry my soul whispers 🌹",
+      "Like stars to the night, I am drawn to you, {n}",
+      "{n}, you paint beauty into my world"
+    ],
+    cute:[
+      "{n}, you make my heart smile 😊",
+      "You're my favorite person, {n} 💕",
+      "{n}, you are pure happiness ❤️"
+    ],
+    deep:[
+      "{n}, you are my peace in chaos",
+      "Love is not a word, it's you, {n}",
+      "{n}, my soul recognizes yours"
+    ]
+  };
 
-    function spawnSparkles() {
-      if (!celebrationEnabled) return;
-      for (let i = 0; i < 10; i++) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.style.left = Math.random() * window.innerWidth + 'px';
-        sparkle.style.top = Math.random() * window.innerHeight + 'px';
-        sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 6000);
-      }
-    }
+  let msg = data[style][Math.floor(Math.random()*data[style].length)];
+  msg = msg.replace("{n}", name);
 
-    window.addEventListener('load', () => {
-      const audio = document.getElementById('bgMusic');
-      audio.play().catch(() => {
-        document.body.addEventListener('click', () => audio.play(), { once: true });
-      });
-      spawnSparkles();
-    });
+  document.getElementById("output").textContent = msg;
+  document.getElementById("share").style.display="block";
 
-    setInterval(spawnSparkles, 6000); // slower for mobile performance
-  </script>
+  let enc = encodeURIComponent(msg);
+
+  document.getElementById("wa").href=`https://wa.me/?text=${enc}`;
+  document.getElementById("tw").href=`https://twitter.com/intent/tweet?text=${enc}`;
+  document.getElementById("fb").href=`https://www.facebook.com/sharer/sharer.php?quote=${enc}`;
+  document.getElementById("em").href=`mailto:?body=${enc}`;
+
+  // 🎉 EFFECTS
+  confetti();
+  spawnSparkles();
+
+  // 🔔 CHIME
+  const chime = document.getElementById("chimeSound");
+  chime.currentTime = 0;
+  chime.play().catch(()=>{});
+}
+
+// ✨ SPARKLES
+function spawnSparkles() {
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random()*window.innerWidth + 'px';
+    s.style.top = Math.random()*window.innerHeight + 'px';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),3000);
+  }
+}
+
+function copyMsg(){
+  const msg=document.getElementById("output").textContent;
+  navigator.clipboard.writeText(msg);
+}
+</script>
+
 </body>
 </html>
