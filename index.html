@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharing Love</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .title {
+      color: #fff;
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); color: #ff6b9d; }
+      50% { transform: scale(1.1); color: #f8b500; }
+    }
+
+    .message {
+      background: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.6;
+      animation: fadeInUp 2s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal-btn {
+      margin-top: 20px;
+      background: linear-gradient(45deg, #ff6b9d, #c44569);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .reveal-btn:hover {
+      background: linear-gradient(45deg, #f8b500, #ff6b9d);
+      transform: scale(1.05);
+    }
+
+    .hidden-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #c44569;
+      animation: slideIn 1s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Edge emojis rising upward */
+    .edge-emoji {
+      position: fixed;
+      font-size: 2em;
+      animation: riseUp 12s linear infinite, colorShift 6s ease-in-out infinite;
+    }
+
+    @keyframes riseUp {
+      0%   { bottom: 0; opacity: 0.7; }
+      50%  { bottom: 50%; opacity: 1; }
+      100% { bottom: 100%; opacity: 0.7; }
+    }
+
+    @keyframes colorShift {
+      0%   { color: #ff6b9d; }
+      25%  { color: #f8b500; }
+      50%  { color: #c44569; }
+      75%  { color: #ff9ff3; }
+      100% { color: #f368e0; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" autoplay loop>
+    <source src="love-music.mp3" type="audio/mpeg">
+    <source src="love-music.ogg" type="audio/ogg">
+    <source src="love-music.wav" type="audio/wav">
+    Your browser does not support the audio element.
+  </audio>
+
+  <h1 class="title">Sharing Love</h1>
+
+  <div class="message">
+    <p>Love is the light that warms the soul, the strength that lifts us, and the joy that makes life beautiful.</p>
+    <p>It has no occasion, no boundaries, no limits — it simply flows, endlessly.</p>
+    <p>May this love surround you, uplift you, and remind you that you are cherished, always.</p>
+    <p>With love,<br>Darius</p>
+  </div>
+
+  <button class="reveal-btn" onclick="revealMessage()">Click to Feel More Love</button>
+  <div class="hidden-message" id="hiddenMessage">
+    Love makes the world brighter, hearts fuller, and days happier. Thank you for being part of this love.
+  </div>
+
+  <!-- Left edge emojis -->
+  <span class="edge-emoji" style="left:5%">💖</span>
+  <span class="edge-emoji" style="left:5%">🌹</span>
+  <span class="edge-emoji" style="left:5%">💕</span>
+
+  <!-- Right edge emojis -->
+  <span class="edge-emoji" style="right:5%">🌸</span>
+  <span class="edge-emoji" style="right:5%">💫</span>
+  <span class="edge-emoji" style="right:5%">💗</span>
+
+  <script>
+    function revealMessage() {
+      document.getElementById("hiddenMessage").style.display = "block";
+      createConfetti();
+      createHeartBurst();
+    }
+
+    function createConfetti() {
+      const colors = ['#ff6b9d', '#c44569', '#f8b500', '#ff9ff3', '#f368e0'];
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'fixed';
+        confetti.style.width = Math.random() * 8 + 4 + 'px';
+        confetti.style.height = Math.random() * 8 + 4 + 'px';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = '-20px';
+        confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards, colorShift 2s infinite alternate`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    function createHeartBurst() {
+      const heartEmojis = ['❤️','💖','💕','💗','💓'];
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        heart.style.position = 'fixed';
+        heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        heart.style.animation = `burst ${Math.random() * 2 + 1}s ease-out forwards`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes fall {
+      to { transform: translateY(${window.innerHeight + 20}px); opacity: 0; }
+    }
+    @keyframes burst {
+      0% { transform: scale(0); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.8; }
+      100% { transform: scale(0); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+
+    // Handle autoplay restrictions + auto celebration
+    window.addEventListener('load', () => {
+      const audio = document.getElementById('bgMusic');
+      audio.play().catch(() => {
+        document.body.addEventListener('click', () => audio.play(), { once: true });
+      });
+
+      // Celebrate immediately
+      createConfetti();
+      createHeartBurst();
+    });
+  </script>
+</body>
+</html>
